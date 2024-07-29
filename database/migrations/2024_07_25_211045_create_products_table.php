@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('sku');
             $table->string('name');
             $table->string('title')->nullable();
-            $table->unsignedInteger('product_variety_id')->nullable();
+            $table->unsignedBigInteger('product_variety_id')->nullable();
             $table->text('description')->nullable();
             $table->string('status')->default('draft');
             $table->double('price', 9, 2)->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->foreign('product_variety_id')
                 ->references('id')
-                ->on('product_variety')
+                ->on('product_varieties')
                 ->onDelete('cascade');
         });
     }

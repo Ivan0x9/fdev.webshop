@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('catalog_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('taxonomy_id');
+            $table->unsignedBigInteger('taxonomy_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->nestedSet();

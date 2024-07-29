@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contract', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id')->reference('id')->on('users');
+            $table->unsignedBigInteger('user_id')->reference('id')->on('users');
             $table->double('price', 9, 2);
             $table->string('product_sku')->references('sku')->on('product');
 

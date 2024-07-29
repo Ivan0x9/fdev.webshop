@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('type')->default('billing');
             $table->string('name');
-            $table->unsignedInteger('country_id');
+            $table->unsignedBigInteger('country_id');
             $table->string('province')->nullable();
             $table->string('postal_code');
             $table->string('city');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('users_id')
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->string('status')->default('pending');
-            $table->unsignedInteger('billpayer_id')->on('id')->reference('addresses')->nullable();
-            $table->unsignedInteger('shipping_address_id')->on('id')->reference('addresses')->nullable();
-            $table->unsignedInteger('order_item_id')->on('id')->reference('order_items')->nullable();
+            $table->unsignedBigInteger('billpayer_id')->on('id')->reference('addresses')->nullable();
+            $table->unsignedBigInteger('shipping_address_id')->on('id')->reference('addresses')->nullable();
             $table->double('amount', 9, 2)->nullable();
             $table->string('total', 9, 2)->nullable();
             $table->text('note')->nullable();
@@ -32,11 +31,6 @@ return new class extends Migration
             $table->foreign('shipping_address_id')
                 ->references('id')
                 ->on('addresses')
-                ->onDelete('cascade');
-
-            $table->foreign('order_item_id')
-                ->references('id')
-                ->on('order_items')
                 ->onDelete('cascade');
         });
     }
