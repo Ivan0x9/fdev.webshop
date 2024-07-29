@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->string('status')->default('pending');
-            $table->unsignedInteger('user_id')->on('id')->reference('users')->nullable();
             $table->unsignedInteger('billpayer_id')->on('id')->reference('addresses')->nullable();
             $table->unsignedInteger('shipping_address_id')->on('id')->reference('addresses')->nullable();
             $table->unsignedInteger('order_item_id')->on('id')->reference('order_items')->nullable();
@@ -24,11 +23,6 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->string('reference')->nullable();
             $table->timestamps();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
 
             $table->foreign('billpayer_id')
                 ->references('id')

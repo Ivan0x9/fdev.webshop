@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pricelists', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_published')->default(false);
             $table->string('title');
             $table->double('price', 9, 2);
             $table->string('product_sku')->references('sku')->on('product');

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('user_id');
             $table->string('type')->default('billing');
             $table->string('name');
-            $table->unsignedInteger('country_id')->reference('id')->on('countries');
+            $table->unsignedInteger('country_id');
             $table->string('province')->nullable();
             $table->string('postal_code');
             $table->string('city');
@@ -23,6 +24,16 @@ return new class extends Migration
             $table->string('address_line_2')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('users_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('country_id')
+                ->references('id')
+                ->on('countries')
+                ->onDelete('cascade');
         });
     }
 

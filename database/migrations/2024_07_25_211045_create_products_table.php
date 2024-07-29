@@ -13,17 +13,21 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-
             $table->boolean('is_published')->default(false);
             $table->string('sku');
             $table->string('name');
             $table->string('title')->nullable();
-            $table->unsignedInteger('product_variety_id')->reference('id')->on('product_variety');
+            $table->unsignedInteger('product_variety_id')->nullable();
             $table->text('description')->nullable();
             $table->string('status')->default('draft');
             $table->double('price', 9, 2)->nullable();
-
+            $table->integer('in_stock')->nullable();
             $table->timestamps();
+
+            $table->foreign('product_variety_id')
+                ->references('id')
+                ->on('product_variety')
+                ->onDelete('cascade');
         });
     }
 

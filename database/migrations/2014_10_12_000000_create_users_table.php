@@ -14,11 +14,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('company');
+            $table->string('tax_number');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedInteger('billpayer_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('billpayer_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
