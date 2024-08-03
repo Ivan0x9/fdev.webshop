@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TaxonomyController extends Controller
+class CatalogTaxonomyController extends Controller
 {
     //
 }
