@@ -17,17 +17,11 @@ return new class extends Migration
             $table->string('sku');
             $table->string('name');
             $table->string('title')->nullable();
-            $table->unsignedBigInteger('product_variety_id')->nullable();
             $table->text('description')->nullable();
             $table->string('status')->default('draft');
             $table->double('price', 9, 2)->nullable();
             $table->integer('in_stock')->nullable();
             $table->timestamps();
-
-            $table->foreign('product_variety_id')
-                ->references('id')
-                ->on('product_varieties')
-                ->onDelete('cascade');
         });
     }
 

@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('catalog_categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->unsignedBigInteger('taxonomy_id');
-            $table->nestedSet();
+        Schema::create('catalog_category_taxonomy', function (Blueprint $table) {
+            $table->unsignedBigInteger('category_id');
+            $table->morphs('subcategory');
             $table->timestamps();
 
-            $table->foreign('taxonomy_id')
+            $table->foreign('category_id')
                 ->references('id')
-                ->on('catalog_taxonomies')
+                ->on('catalog_categories')
                 ->onDelete('cascade');
+
+            $table->primary(['category_id', 'subcategory_id']);
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catalog_categories');
+        Schema::dropIfExists('catalog_category_taxonomy');
     }
 };
