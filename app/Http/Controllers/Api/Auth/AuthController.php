@@ -79,10 +79,10 @@ class AuthController extends Controller
                 'name' => $user->name,
             ];
 
-            return $this->sendResponse($success, 'User login successfully.');
+            return $this->sendResponse($success, 'User logged in successfully.');
         } 
         else{ 
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return $this->sendError('User not authorised.', ['error' => 'Unauthorised access'], 401);
         } 
 
     }
@@ -90,7 +90,7 @@ class AuthController extends Controller
     /**
      * Handle log out user.
      */
-    public function logout(Request $request): JsonResponse
+    public function logout(): JsonResponse
     {
         /**
          * @var $user App\Models\User
@@ -98,15 +98,15 @@ class AuthController extends Controller
         $user = Auth::guard('sanctum')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthenticated'], 401);
+            return $this->sendError('User not authenticated', ['error'=>'Unauthenticated'], 403);
         }
  
         try {
             $user->tokens()->delete();
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Unable to revoke tokens'], 500);
+            return $this->sendError('Unable to revoke tokens', [$e], 403);
         }
  
-        return response()->json(['message' => 'Tokens revoked successfully']);
+        return $this->sendResponse($user, 'User logged out successfully.');
     }
 }
