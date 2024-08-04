@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('sku')->index();
             $table->boolean('is_published')->default(false);
-            $table->string('sku');
             $table->string('name');
             $table->string('title')->nullable();
             $table->text('description')->nullable();

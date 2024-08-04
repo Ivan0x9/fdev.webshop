@@ -26,12 +26,12 @@ return new class extends Migration
             $table->foreign('billpayer_id')
                 ->references('id')
                 ->on('addresses')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->foreign('shipping_address_id')
                 ->references('id')
                 ->on('addresses')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
     }
 

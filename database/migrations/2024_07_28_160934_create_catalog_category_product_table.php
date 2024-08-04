@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('catalog_category_product', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('category_id');
             $table->morphs('product');
             $table->timestamps();
@@ -21,7 +22,10 @@ return new class extends Migration
                 ->on('catalog_categories')
                 ->onDelete('cascade');
 
-            $table->primary(['category_id', 'product_id']);
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('products')
+                ->onDelete('cascade');
         });
     }
 
