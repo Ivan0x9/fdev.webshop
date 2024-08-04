@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
@@ -40,5 +42,15 @@ class Product extends Model
 
     public function getTitle() : string {
         return (string) $this->title ?? $this->name;
+    }
+
+    public function scopeOrderByTitle(Builder $query) : Builder {
+        $orderTitle = $this->title ? 'title' : 'name';
+
+        return $query->orderBy($orderTitle, 'desc');
+    }
+
+    public function scopePublished(Builder $query) : Builder {
+        return $query->where('is_published', 1);
     }
 }
