@@ -10,6 +10,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    public $timestamps = true;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,15 +29,16 @@ class Product extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'is_published' => 'boolean',
-            'status' => ProductStatus::class,
-        ];
+    protected $casts = [
+        'is_published' => 'boolean',
+        'status' => ProductStatus::class,
+    ];
+
+    public function getTitle() : string {
+        return (string) $this->title ?? $this->name;
     }
 }

@@ -4,8 +4,46 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
     use HasFactory;
+
+    public $timestamps = true;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'address_line_1',
+        'address_line_2',
+        'city',
+        'country_id',
+        'name',
+        'postal_code',
+        'province',
+        'type',
+        'user_id',
+    ];
+
+    protected $casts = [
+        'type' => AddressType::class,
+    ];
+
+    public function country() : BelongsTo {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function user() : BelongsTo {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getFullAddress() : string {
+        return (string) $this->country->name . "\r\n" . 
+        $this->postalcode . " " . $this->city . $this->province ? ", " . $this->province : ""  . "\r\n" . 
+        $this->address_line_1 . " " . $this->address_line_2;
+    }
 }

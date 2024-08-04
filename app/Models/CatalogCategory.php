@@ -11,6 +11,8 @@ class CatalogCategory extends Model
 {
     use HasFactory, NodeTrait;
 
+    public $timestamps = true;
+
     /**
      * The attributes that are mass assignable.
      *
