@@ -13,16 +13,17 @@ return new class extends Migration
     {
         Schema::create('contract_lists', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->reference('id')->on('users');
-            $table->double('price', 9, 2);
-            $table->string('product_sku')->references('sku')->on('product');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('pricelist_id');
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
 
-            $table->timestamps();
+            $table->foreign('pricelist_id')
+                ->references('id')
+                ->on('pricelists');
         });
     }
 

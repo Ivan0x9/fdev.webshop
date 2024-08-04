@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_published')->default(false);
             $table->string('title');
-            $table->double('price', 9, 2);
-            $table->string('product_sku')->references('sku')->on('product');
             $table->timestamps();
         });
     }

@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('type')->default('billing');
             $table->string('name');
-            $table->unsignedBigInteger('country_id');
+            $table->char('country_id', 2);
             $table->string('province')->nullable();
-            $table->string('postal_code');
+            $table->string('postal_code', 12)->nullable(); //12 because: http://stackoverflow.com/a/29280718/1016746
             $table->string('city');
             $table->string('address_line_1');
             $table->string('address_line_2')->nullable();
@@ -32,8 +32,7 @@ return new class extends Migration
 
             $table->foreign('country_id')
                 ->references('id')
-                ->on('countries')
-                ->onDelete('cascade');
+                ->on('countries');
         });
     }
 
