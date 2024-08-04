@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->unsignedBigInteger('billpayer_id')->on('id')->reference('addresses')->nullable();
             $table->unsignedBigInteger('shipping_address_id')->on('id')->reference('addresses')->nullable();
-            $table->double('amount', 9, 2)->nullable();
+            $table->longText('payment_details')->nullable();
             $table->string('total', 9, 2)->nullable();
             $table->text('note')->nullable();
             $table->string('reference')->nullable();

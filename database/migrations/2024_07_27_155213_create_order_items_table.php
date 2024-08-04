@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->string('product_type');
             $table->integer('product_id');
-            $table->string('name')->nullable();
             $table->string('quantity');
             $table->double('price', 9, 2);
             $table->timestamps();
