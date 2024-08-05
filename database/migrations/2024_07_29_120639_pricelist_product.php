@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pricelist_product', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_published')->default(false);
             $table->unsignedBigInteger('pricelist_id');
             $table->string('product_sku');
             $table->double('price', 9, 2);

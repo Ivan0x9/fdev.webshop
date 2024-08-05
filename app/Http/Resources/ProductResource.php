@@ -22,7 +22,7 @@ class ProductResource extends JsonResource
             'title' => $this->getTitle(),
             'description' => $this->description,
             'status' => $this->status,
-            'price' => $this->formatPrice($this->price),
+            'price' => $this->formatPrice($this->getPrice()),
             'status' => $this->status,
             'categories' => ProductCategoryResource::collection($this->whenLoaded('categories'))
         ];

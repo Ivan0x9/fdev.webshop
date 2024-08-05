@@ -22,14 +22,15 @@ class DatabaseSeeder extends Seeder
         /**
          * Initial database seeders
          */
-        $this->call(Countries::class);
-        $this->call(CatalogTaxonomies::class);
-        $this->call(CatalogCategoryProduct::class);
+        // $this->call(Countries::class);
+        // $this->call(CatalogTaxonomies::class);
+        // $this->call(CatalogCategoryProduct::class);
+        $this->call(Pricelists::class);
 
         /**
          * User factory
          */
-        User::factory(10)->create();
+        // User::factory(10)->create();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
