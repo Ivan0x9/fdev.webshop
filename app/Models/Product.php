@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Product extends Model
@@ -41,6 +42,18 @@ class Product extends Model
         )->withTimestamps();
     }
 
+    public function pricelists(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Pricelist::class,
+            'pricelist_product',
+            'product_sku',
+            'pricelist_id',
+            'sku',
+            'id'
+        )->withPivot('price');
+    }
+
     /**
      * The attributes that should be cast.
      *
@@ -50,6 +63,16 @@ class Product extends Model
         'is_published' => 'boolean',
         'status' => ProductStatus::class,
     ];
+
+    public function getPrice() : float {
+        if ($this->pricelists->isEmpty()) {
+            return $this->price;
+        }
+
+        $pricelist = $this->pricelists->where('title', 'default')->first();
+
+        return (float) $pricelist->pivot->price;
+    }
 
     public function getTitle() : string {
         return (string) $this->title ?? $this->name;

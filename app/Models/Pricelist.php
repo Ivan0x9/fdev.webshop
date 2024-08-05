@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Pricelist extends Model
 {
@@ -21,12 +21,14 @@ class Pricelist extends Model
         'title'
     ];
 
-    public function products() : HasMany {
-        return $this->hasMany(Product::class, 'product_sku', 'sku');
-    }
-
-    // Select price - thought help
-    public function getPrice($sku) : float {
-        return $this->products()->where('sku', $sku)->first();
+    public function products() : BelongsToMany {
+        return $this->belongsToMany(
+            Product::class,
+            'pricelist_product',
+            'pricelist_id',
+            'product_sku',
+            'id',
+            'sku'
+        )->withPivot('price');
     }
 }
