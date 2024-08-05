@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'status' => $this->status,
             'price' => $this->formatPrice($this->price),
             'status' => $this->status,
+            'categories' => ProductCategoryResource::collection($this->whenLoaded('categories'))
         ];
     }
 }

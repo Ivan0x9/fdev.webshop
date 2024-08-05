@@ -35,12 +35,12 @@ class ProductFactory extends Factory
         $price = rand(20, 2000);
  
         return [
-            'sku' => fake()->uuid(),
+            'sku' => fake()->unique()->bothify('??##?#??##?#'),
             'is_published' => 1,
             'name' => fake()->words(2, true),
             'title' => $title,
             'slug' => Str::slug($title),
-            'description' => fake()->paragraph(3),
+            'description' => fake()->text(),
             'status' => $status->value,
             'in_stock' => $inStock,
             'price' => $price,

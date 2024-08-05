@@ -29,7 +29,7 @@ class CatalogTaxonomy extends Model
      */
     public function categories(): HasMany
     {
-        return $this->hasMany(CatalogCategory::class);
+        return $this->hasMany(CatalogCategory::class, 'taxonomy_id');
     }
 
     /**
@@ -49,18 +49,18 @@ class CatalogTaxonomy extends Model
     {
         $nodes = [];
 
-        $traverse = function ($taxons, $prefix = '') use (&$traverse, &$nodes) {
-            foreach ($taxons as $taxon) {
+        $traverse = function ($categories, $prefix = '') use (&$traverse, &$nodes) {
+            foreach ($categories as $taxon) {
                 $suffix = '';
         
                 if ($taxon->parent) {
                     if ($taxon->parent->parent) {
-                        $prefix =  $taxon->parent->parent->name . ' -- ' . $taxon->parent->name;
+                        $prefix =  $taxon->parent->parent->name . ' / ' . $taxon->parent->name;
                     } else {
                         $prefix = $taxon->parent->name;
                     }
 
-                    $prefix .= ' -- ';
+                    $prefix .= ' / ';
                 }
 
                 $nodes[$taxon->id] = $prefix . $taxon->name . $suffix;
@@ -70,7 +70,7 @@ class CatalogTaxonomy extends Model
         };
 
         $traverse(
-            $this->taxons()
+            $this->categories()
                 ->defaultOrder()
                 ->get()
                 ->toTree()

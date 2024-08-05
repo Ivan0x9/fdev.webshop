@@ -61,7 +61,8 @@ class Product extends Model
         return $query->orderBy($orderTitle, 'desc');
     }
 
-    public function scopePublished(Builder $query) : Builder {
-        return $query->where('is_published', 1);
+    public function scopeListed(Builder $query) : Builder {
+        return $query->where('is_published', 1)
+            ->whereIn('status', ['available', 'unavailable']);
     }
 }

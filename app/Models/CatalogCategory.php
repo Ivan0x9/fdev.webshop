@@ -35,11 +35,24 @@ class CatalogCategory extends Model
         return $this->belongsTo(CatalogTaxonomy::class, 'taxonomy_id');
     }
 
-    /**
-     * @inheritdoc
-     */
+    public function products()
+    {
+        return $this->morphedByMany(
+            Product::class,
+            'product',
+            'catalog_category_product',
+            'category_id',
+            'product_id'
+        );
+    }
+
     public function getName(): string
     {
         return (string) $this->name;
+    }
+
+    public function getDescription(): string
+    {
+        return (string) $this->description ?? "";
     }
 }

@@ -18,15 +18,8 @@ class ProductCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'data' => $this->collection->transform(function ($product) {
-                return [
-                    'sku' => $product->sku,
-                    'title' => $product->getTitle(),
-                    'description' => $product->description,
-                    'status' => $product->status,
-                    'price' => $this->formatPrice($product->price),
-                    'status' => $product->status,
-                ];
+            'data' => $this->collection->transform(function ($product) use($request) {
+                return new ProductResource($product, $request);
             }),
         ];
     }
