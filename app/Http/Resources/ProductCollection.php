@@ -2,11 +2,14 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\FormatsPrices;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ProductCollection extends ResourceCollection
 {
+    use FormatsPrices;
+    
     /**
      * Transform the resource collection into an array.
      *
@@ -17,12 +20,12 @@ class ProductCollection extends ResourceCollection
         return [
             'data' => $this->collection->transform(function ($product) {
                 return [
-                    'sku' => $this->sku,
-                    'title' => $this->getTitle(),
-                    'description' => $this->description,
-                    'status' => $this->status,
-                    'price' => $this->formatPrice($this->price),
-                    'status' => $this->status,
+                    'sku' => $product->sku,
+                    'title' => $product->getTitle(),
+                    'description' => $product->description,
+                    'status' => $product->status,
+                    'price' => $this->formatPrice($product->price),
+                    'status' => $product->status,
                 ];
             }),
         ];

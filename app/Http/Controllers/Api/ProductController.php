@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
@@ -21,7 +20,8 @@ class ProductController extends Controller
 
     public function product($sku) : object {
         $product = Product::query()
-            ->find($sku);
+            ->where('sku', $sku)
+            ->first();
 
         return new ProductResource($product);
     }
