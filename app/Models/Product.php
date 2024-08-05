@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Product extends Model
 {
@@ -26,9 +25,21 @@ class Product extends Model
         'name',
         'price',
         'sku',
+        'slug',
         'status',
         'title',
     ];
+
+    public function categories(): MorphToMany
+    {
+        return $this->morphToMany(
+            CatalogCategory::class,
+            'product',
+            'catalog_category_product',
+            'product_id',
+            'category_id'
+        )->withTimestamps();
+    }
 
     /**
      * The attributes that should be cast.

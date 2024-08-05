@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('is_published')->default(false);
             $table->string('name');
             $table->string('title')->nullable();
+            $table->string('slug')->nullable();
             $table->text('description')->nullable();
             $table->string('status')->default('draft');
             $table->double('price', 9, 2)->nullable();

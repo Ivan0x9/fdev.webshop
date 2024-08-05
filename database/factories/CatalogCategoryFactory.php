@@ -6,7 +6,7 @@ use App\Models\CatalogTaxonomy;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CatalogTaxonomy>
  */
 class CatalogCategoryFactory extends Factory
 {
