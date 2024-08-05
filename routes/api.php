@@ -30,7 +30,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::controller(ProductController::class)->group(function () {
-        Route::get('products', 'products');
+        Route::get('products', 'productsAll');
+        Route::get('products/filter', 'productsFilter');
         Route::get('product/{sku}', 'product');
     });
 
