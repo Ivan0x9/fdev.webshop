@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -65,13 +66,23 @@ class Product extends Model
     ];
 
     public function getPrice() : float {
-        if ($this->pricelists->isEmpty()) {
-            return $this->price;
+        if(Auth::check()) {
+            $user = User::with('contractList.pricelist.products')->find(Auth::id());
+
+            $product = $user->contractList->pricelist->products
+                ->where('sku', $this->sku)
+                ->first();
+
+            $price = $product->pivot->price;
+
+        } else if($this->pricelists) {
+            $pricelist = $this->pricelists->where('title', 'default')->first();
+            $price = $pricelist->pivot->price;
+        } else {
+            $price = $this->price;
         }
 
-        $pricelist = $this->pricelists->where('title', 'default')->first();
-
-        return (float) $pricelist->pivot->price;
+        return (float) $price;
     }
 
     public function getTitle() : string {

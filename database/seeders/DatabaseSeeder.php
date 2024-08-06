@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(Countries::class);
         // $this->call(CatalogTaxonomies::class);
         // $this->call(CatalogCategoryProduct::class);
-        $this->call(Pricelists::class);
+        // $this->call(Pricelists::class);
+        $this->call(ContractLists::class);
 
         /**
          * User factory
