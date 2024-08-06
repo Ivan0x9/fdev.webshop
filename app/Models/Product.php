@@ -81,7 +81,13 @@ class Product extends Model
 
         } else if($this->pricelists) {
             $pricelist = $this->pricelists->where('title', 'default')->first();
-            $price = $pricelist->pivot->price;
+
+            if($pricelist) {
+                $price = $pricelist->pivot->price;
+            }
+            
+            $price = $this->price;
+            
         } else {
             $price = $this->price;
         }
