@@ -36,14 +36,14 @@ class Order extends Model
         'payment_details' => 'array'
     ];
     
-    public function billpayer() : BelongsTo
+    public function billingAddress() : BelongsTo
     {
-        return $this->belongsTo(Address::class, 'billpayer_id', 'user_id')->where('type', 'billing');
+        return $this->belongsTo(Address::class, 'billpayer_id', 'id')->where('type', 'billing');
     }
 
     public function shippingAddress() : BelongsTo
     {
-        return $this->belongsTo(Address::class, 'shipping_address_id', 'user_id')->where('type', 'shipping');
+        return $this->belongsTo(Address::class, 'shipping_address_id', 'id')->where('type', 'shipping');
     }
 
     public function items() : HasMany

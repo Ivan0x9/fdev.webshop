@@ -42,8 +42,10 @@ class Address extends Model
     }
 
     public function getFullAddress() : string {
-        return (string) $this->country->name . "\r\n" . 
-        $this->postalcode . " " . $this->city . $this->province ? ", " . $this->province : ""  . "\r\n" . 
-        $this->address_line_1 . " " . $this->address_line_2;
+        $province = $this->province ? ", " . $this->province : ""  . "\r\n";
+
+        return $this->country->name . "\r\n" . 
+            $this->postal_code . " " . $this->city . $province . 
+            $this->address_line_1 . " " . $this->address_line_2;
     }
 }
