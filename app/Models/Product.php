@@ -96,13 +96,11 @@ class Product extends Model
     }
 
     public function getTitle() : string {
-        return (string) $this->title ?? $this->name;
+        return (string) $this->title;
     }
 
     public function scopeOrderByTitle(Builder $query) : Builder {
-        $orderTitle = $this->title ? 'title' : 'name';
-
-        return $query->orderBy($orderTitle, 'desc');
+        return $query->orderBy('title', 'desc');
     }
 
     public function scopeListed(Builder $query) : Builder {
