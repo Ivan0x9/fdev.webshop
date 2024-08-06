@@ -6,6 +6,7 @@ use App\Filter\FilterRequest;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
+use App\Models\Country;
 use App\Models\Pricelist;
 use App\Models\Product;
 use App\Models\User;
@@ -14,7 +15,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function productsAll() : object {
+    public function productsAll() : object
+    {
         $products = Product::listed()
             ->orderByTitle()
             ->paginate(25);

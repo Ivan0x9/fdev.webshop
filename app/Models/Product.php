@@ -69,11 +69,15 @@ class Product extends Model
         if(Auth::check()) {
             $user = User::with('contractList.pricelist.products')->find(Auth::id());
 
-            $product = $user->contractList->pricelist->products
-                ->where('sku', $this->sku)
-                ->first();
+            if($user->contractList) {
+                $product = $user->contractList->pricelist->products
+                    ->where('sku', $this->sku)
+                    ->first();
 
-            $price = $product->pivot->price;
+                    $price = $product->pivot->price;
+            }
+
+            $price = $this->price;
 
         } else if($this->pricelists) {
             $pricelist = $this->pricelists->where('title', 'default')->first();

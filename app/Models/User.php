@@ -55,4 +55,12 @@ class User extends Authenticatable
     public function address() : BelongsTo {
         return $this->belongsTo(Address::class);
     }
+
+    public function getBillingAddress() : mixed {
+        return  $this->address->type == AddressType::Billing->value ? (int) $this->address->id : (boolean) false;
+    }
+
+    public function getShippingAddress() : mixed {
+        return  $this->address->type == AddressType::Shipping->value ? (int) $this->address->id : (boolean) false;
+    }
 }

@@ -9,7 +9,8 @@ use App\Models\CatalogTaxonomy;
 
 class CatalogCategoryController extends Controller
 {
-    public function catalogCategories() : object {
+    public function catalogCategories() : object
+    {
         $taxonomies = CatalogTaxonomy::with(['categories'])
             ->orderBy('name')
             ->get();
@@ -23,7 +24,8 @@ class CatalogCategoryController extends Controller
         return collect($catalogData);
     }
 
-    public function products($id) : object {
+    public function products($id) : object
+    {
         $category = CatalogCategory::findOrFail($id);
 
         $products = $category->products()->listed()->paginate(25);

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('type')->default('billing');
-            $table->string('name');
             $table->char('country_id', 2);
             $table->string('province')->nullable();
             $table->string('postal_code', 12)->nullable(); //12 because: http://stackoverflow.com/a/29280718/1016746

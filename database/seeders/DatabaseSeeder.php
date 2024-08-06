@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(CatalogTaxonomies::class);
         // $this->call(CatalogCategoryProduct::class);
         // $this->call(Pricelists::class);
-        $this->call(ContractLists::class);
+        // $this->call(ContractLists::class);
+        $this->call(Addressses::class);
 
         /**
          * User factory

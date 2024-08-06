@@ -22,7 +22,6 @@ class Address extends Model
         'address_line_2',
         'city',
         'country_id',
-        'name',
         'postal_code',
         'province',
         'type',
@@ -31,10 +30,11 @@ class Address extends Model
 
     protected $casts = [
         'type' => AddressType::class,
+        'country_id' => 'string',
     ];
 
     public function country() : BelongsTo {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'country_id');
     }
 
     public function user() : BelongsTo {
