@@ -24,16 +24,14 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('logout', [AuthController::class, 'logout']);
-
-    Route::get('user', function (Request $request) {
-        return $request->user();
-    });
-
     Route::controller(AddressController::class)->group(function () {
         Route::post('user/save/address', 'saveAddress');
     });
 
+    Route::controller(CatalogCategoryController::class)->group(function () {
+        Route::get('categories', 'catalogCategories');
+        Route::get('category/{id}/products', 'products');
+    });
 
     Route::controller(ProductController::class)->group(function () {
         Route::get('products', 'productsAll');
@@ -41,8 +39,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('product/{sku}', 'product');
     });
 
-    Route::controller(CatalogCategoryController::class)->group(function () {
-        Route::get('categories', 'catalogCategories');
-        Route::get('category/{id}/products', 'products');
+    Route::get('user', function (Request $request) {
+        return $request->user();
     });
+
+    Route::post('logout', [AuthController::class, 'logout']);
 });
