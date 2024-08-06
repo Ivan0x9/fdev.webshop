@@ -16,11 +16,8 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function create() : JsonResponse {
-        if(!Auth::check()) {
-            return $this->sendError('User not authorised.', ['error' => 'Unauthorised access'], 401);
-        }
-
+    public function create() : JsonResponse
+    {
         $user = User::find(Auth::id());
 
         $order = Order::create([
@@ -36,10 +33,6 @@ class OrderController extends Controller
 
     public function orders() : object
     {
-        if(!Auth::check()) {
-            return $this->sendError('User not authorised.', ['error' => 'Unauthorised access'], 401);
-        }
-
         $user = User::find(Auth::id());
 
         $orders = $user->orders()
@@ -50,10 +43,6 @@ class OrderController extends Controller
 
     public function show($number) : object
     {
-        if(!Auth::check()) {
-            return $this->sendError('User not authorised.', ['error' => 'Unauthorised access'], 401);
-        }
-
         $order = Order::where('number', $number)->first();
 
         if(!$order) {
@@ -63,12 +52,19 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    public function addProduct($number, OrderRequest $request) : JsonResponse
+    public function finalize($number) : JsonResponse
     {
-        if(!Auth::check()) {
-            return $this->sendError('User not authorised.', ['error' => 'Unauthorised access'], 401);
+        $order = Order::where('number', $number)->first();
+
+        if(!$order) {
+            return $this->sendError('Order does not exist.', ['error' => 'Missing order in database'], 404);
         }
 
+        return $this->sendResponse($order, 'Order finalized. Order receipt saved.');;
+    }
+
+    public function addProduct($number, OrderRequest $request) : JsonResponse
+    {
         $order = Order::where('number', $number)->first();
 
         if(!$order) {
@@ -111,10 +107,6 @@ class OrderController extends Controller
 
     public function removeProduct($number, Request $request) : JsonResponse
     {
-        if(!Auth::check()) {
-            return $this->sendError('User not authorised.', ['error' => 'Unauthorised access'], 401);
-        }
-
         $order = Order::where('number', $number)->first();
 
         if(!$order) {

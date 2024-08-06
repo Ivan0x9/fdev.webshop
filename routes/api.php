@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('order/{number}', 'show');
         Route::post('order/{number}/add-product', 'addProduct');
         Route::post('order/{number}/remove-product', 'removeProduct');
+        Route::get('order/{number}', 'finalize');
     });
 
     Route::controller(ProductController::class)->group(function () {
