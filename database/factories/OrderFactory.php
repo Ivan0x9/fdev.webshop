@@ -25,7 +25,7 @@ class OrderFactory extends Factory
         $shipping = Arr::random(Address::where('type', 'shipping')->pluck('id')->toArray());
 
         return [
-            'number' => fake()->uuid(),
+            'number' => uniqid(),
             'status' => $status,
             'user_id' => Address::find($billpayerId)->user_id,
             'billpayer_id' => $billpayerId,
