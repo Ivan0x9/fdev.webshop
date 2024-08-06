@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\CatalogCategory;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -27,7 +29,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(CatalogCategoryProduct::class);
         // $this->call(Pricelists::class);
         // $this->call(ContractLists::class);
-        $this->call(Addressses::class);
+        // $this->call(Addressses::class);
+        $this->call(Orders::class);
 
         /**
          * User factory
