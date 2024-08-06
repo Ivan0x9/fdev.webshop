@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,15 +53,19 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function address() : BelongsTo {
-        return $this->belongsTo(Address::class);
+    public function address() : HasOne {
+        return $this->hasOne(Address::class, 'user_id');
     }
 
-    public function getBillingAddress() : mixed {
-        return  $this->address->type == AddressType::Billing->value ? (int) $this->address->id : (boolean) false;
+    public function orders() : HasMany {
+        return $this->hasMany(Order::class, 'user_id');
     }
 
-    public function getShippingAddress() : mixed {
-        return  $this->address->type == AddressType::Shipping->value ? (int) $this->address->id : (boolean) false;
+    public function getBillingAddressId() : mixed {
+        return  $this->address->type->value == AddressType::Billing->value ? (int) $this->address->id : null;
+    }
+
+    public function getShippingAddressId() : mixed {
+        return  $this->address->type->value == AddressType::Shipping->value ? (int) $this->address->id : null;
     }
 }

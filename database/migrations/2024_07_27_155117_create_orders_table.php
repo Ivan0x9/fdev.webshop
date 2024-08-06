@@ -15,13 +15,19 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->string('status')->default('pending');
-            $table->unsignedBigInteger('billpayer_id')->on('id')->reference('addresses')->nullable();
-            $table->unsignedBigInteger('shipping_address_id')->on('id')->reference('addresses')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('billpayer_id')->nullable();
+            $table->unsignedBigInteger('shipping_address_id')->nullable();
             $table->longText('payment_details')->nullable();
             $table->string('total', 9, 2)->nullable();
             $table->text('note')->nullable();
             $table->string('reference')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->foreign('billpayer_id')
                 ->references('id')

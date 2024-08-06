@@ -27,6 +27,7 @@ class OrderFactory extends Factory
         return [
             'number' => fake()->uuid(),
             'status' => $status,
+            'user_id' => Address::find($billpayerId)->user_id,
             'billpayer_id' => $billpayerId,
             'shipping_address_id' => $shipping,
             'payment_details' => [

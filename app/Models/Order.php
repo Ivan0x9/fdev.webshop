@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\OrderModificators;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
-    use HasFactory;
+    use OrderModificators, HasFactory;
 
     public $timestamps = true;
 
@@ -20,6 +22,7 @@ class Order extends Model
     protected $fillable = [
         'number',
         'status',
+        'user_id',
         'billpayer_id',
         'shipping_address_id',
         'payment_details',
@@ -33,11 +36,23 @@ class Order extends Model
         'payment_details' => 'array'
     ];
     
-    public function billpayer() : BelongsTo {
+    public function billpayer() : BelongsTo
+    {
         return $this->belongsTo(Address::class, 'billpayer_id', 'user_id')->where('type', 'billing');
     }
 
-    public function shippingAddress() : BelongsTo {
-        return $this->belongsTo(Address::class, 'billpayer_id', 'user_id')->where('type', 'shipping');
+    public function shippingAddress() : BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'shipping_address_id', 'user_id')->where('type', 'shipping');
+    }
+
+    public function items() : HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function user() : BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
