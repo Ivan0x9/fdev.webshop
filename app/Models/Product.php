@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Product extends Model
 {
@@ -66,6 +68,8 @@ class Product extends Model
     ];
 
     public function getPrice() : float {
+        $price = 0;
+
         if(Auth::check()) {
             $user = User::with('contractList.pricelist.products')->find(Auth::id());
 
@@ -74,20 +78,32 @@ class Product extends Model
                     ->where('sku', $this->sku)
                     ->first();
 
+                if ($product) {
                     $price = $product->pivot->price;
+                }
+            } else if ($this->pricelists && $this->pricelists->isNotEmpty()) {
+                $pricelists = $this->pricelists;
+    
+                $pricelistTitle = config('pricelist.selected');
+    
+                if (app()->configurationIsCached()) {
+                    Artisan::call('config:cache');
+                }
+    
+                $pricelist = $pricelists->where('title', $pricelistTitle)->first();
+    
+                if($pricelist) {
+                    $price = $pricelist->pivot->price;
+                } else {
+                    $pricelist = $pricelists->where('title', 'default')->first();
+
+                    if($pricelist) {
+                        $price = $pricelist->pivot->price;
+                    }
+
+                    $price = $this->price;
+                }
             }
-
-            $price = $this->price;
-
-        } else if($this->pricelists) {
-            $pricelist = $this->pricelists->where('title', 'default')->first();
-
-            if($pricelist) {
-                $price = $pricelist->pivot->price;
-            }
-            
-            $price = $this->price;
-            
         } else {
             $price = $this->price;
         }
