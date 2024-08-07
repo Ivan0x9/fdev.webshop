@@ -71,7 +71,7 @@ class OrderController extends Controller
         return $this->sendResponse($order, 'Order confirmed.');
     }
 
-    public function finalize($number, Request $request) : JsonResponse
+    public function finalize($number) : JsonResponse
     {
         $user = User::find(Auth::id());
 
